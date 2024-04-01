@@ -1,5 +1,8 @@
+import { sleep } from 'k6';
+import { SharedArray } from 'k6/data';
 import diam from 'k6/x/diameter';
 import { cfg } from './configs/config.js';
+sleep(1);
 
 let diamType = diam.DataType();
 
@@ -125,3 +128,11 @@ export const options = {
         },
     },
 };
+
+export const callingCalled = new SharedArray("an object represents who is calling and who is called", function () {
+    let objCallingCalled = {};
+    for (let i = 0; i <= cfg[0].get.numberOfAccounts; i++) {
+        objCallingCalled[i.toString()] = userData[0].get.zz + (cfg[0].get.numberOfAccounts - i + 1).toString();
+    }
+    return [objCallingCalled];
+});
