@@ -1067,3 +1067,14 @@ export function terminateDataSession() {
 
     dataTerminate(sessionID, phoneNumber);
 }
+
+export function terminateVoiceCallingCalledSession() {
+    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
+    // console.warn("SESSION ID terminateVoiceCallingCalledSession: " + sessionID.toString());
+    let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
+    let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
+    // console.warn("PHONE NUMBER CALLED terminateVoiceCallingCalledSession: " + phoneNumberCalled);
+
+    voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.usedTime);
+    voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.usedTime);
+}
