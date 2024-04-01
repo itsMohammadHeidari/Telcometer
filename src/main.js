@@ -1058,3 +1058,12 @@ export function updateVideoCallingSession() {
     videoCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.requestedTime, userData[0].get.usedTime);
     sleep(5);
 }
+
+export function terminateDataSession() {
+    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
+    // console.warn("SESSION ID terminateDataSession: " + sessionID.toString());
+    let phoneNumber = userData[0].get.zz + sessionID.toString();
+    // console.warn("PHONE NUMBER terminateDataSession: " + phoneNumber);
+
+    dataTerminate(sessionID, phoneNumber);
+}
