@@ -1,5 +1,7 @@
 import diam from 'k6/x/diameter';
 
+let diamType = diam.DataType();
+
 let client = diam.Client({
     // Timeout for each request
     requestTimeout: "100ms",
