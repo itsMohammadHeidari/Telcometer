@@ -998,3 +998,16 @@ export function initDataSession() {
 
     dataInit(sessionID, phoneNumber);
 }
+
+export function initVoiceCallingCalledSession() {
+    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
+    // console.warn("SESSION ID initVoiceCallingCalledSession: " + sessionID.toString());
+    let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
+    // console.warn("PHONE NUMBER CALLING initVoiceCallingCalledSession: " + phoneNumberCalling);
+    let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
+    // console.warn("PHONE NUMBER CALLED initVoiceCallingCalledSession: " + phoneNumberCalled);
+    const requestedTime = 0;
+
+    voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime);
+    voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime);
+}
