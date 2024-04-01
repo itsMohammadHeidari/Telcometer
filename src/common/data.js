@@ -122,3 +122,19 @@ export const code = new SharedArray("diameter codes", function () {
         }
     ]
 });
+
+export const userData = new SharedArray("user constant data", function () {
+    return [
+        {
+            get: {
+                prefix: "41820",
+                preMiddleFix: "4182000000697",
+                zz: "00",
+                timeZone: "GMT + 3 hours 30 minutes No adjustment",
+                userLocationInfo: "MCC 418 Iraq, MNC 20 Zain Iraq (previously Atheer), ECGI 0x10b",
+                requestedTime: 0,
+                usedTime: 0
+            }
+        }
+    ]
+});
