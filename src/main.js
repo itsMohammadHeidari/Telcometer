@@ -1011,3 +1011,15 @@ export function initVoiceCallingCalledSession() {
     voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime);
     voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime);
 }
+
+export function initVideoCallingSession() {
+    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
+    // console.warn("SESSION ID initVideoCallingSession: " + sessionID.toString());
+    let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
+    // console.warn("PHONE NUMBER CALLED initVideoCallingSession: " + phoneNumberCalled);
+    let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
+    // console.warn("PHONE NUMBER CALLED initVideoCallingSession: " + phoneNumberCalled);
+    const requestedTime = 0;
+
+    videoCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime);
+}
