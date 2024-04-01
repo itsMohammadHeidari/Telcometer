@@ -136,3 +136,14 @@ export const callingCalled = new SharedArray("an object represents who is callin
     }
     return [objCallingCalled];
 });
+
+export const IMEISVs = new SharedArray("an array containing IMEISV for accounts", function () {
+    let imeisvs = [];
+
+    for (let i = 0; i < cfg[0].get.numberOfAccounts; i++) {
+        imeisvs.push(parseInt(cfg[0].get.TAC +
+            Math.floor(Math.random() * (999999 - 111111 + 1) + 111111).toString() +
+            Math.floor(Math.random() * (98 - 11 + 1) + 11).toString()));
+    }
+    return imeisvs;
+});
