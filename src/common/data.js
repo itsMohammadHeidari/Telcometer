@@ -9,3 +9,13 @@ export const cmd = new SharedArray("diameter commands", function () {
         }
     ]
 });
+
+export const app = new SharedArray("diameter application ids", function () {
+    return [
+        {
+            get: {
+                ChargingControl: 4
+            }
+        }
+    ]
+});
