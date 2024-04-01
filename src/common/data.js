@@ -29,3 +29,14 @@ export const vendor = new SharedArray("diameter application vendor ids", functio
         }
     ]
 });
+
+export const flag = new SharedArray("diameter application flags", function () {
+    return [
+        {
+            get: {
+                V: 0x80,
+                M: 0x40
+            }
+        }
+    ]
+});
