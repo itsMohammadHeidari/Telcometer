@@ -989,3 +989,12 @@ function videoCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled,
 
     console.log(`CCA: ${cca}`)
 }
+
+export function initDataSession() {
+    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
+    // console.warn("SESSION ID initDataSession: " + sessionID.toString());
+    let phoneNumber = userData[0].get.zz + sessionID.toString();
+    // console.warn("PHONE NUMBER initDataSession: " + phoneNumber);
+
+    dataInit(sessionID, phoneNumber);
+}
