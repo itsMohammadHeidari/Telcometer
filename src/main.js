@@ -1078,3 +1078,14 @@ export function terminateVoiceCallingCalledSession() {
     voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.usedTime);
     voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.usedTime);
 }
+
+export function terminateVideoCallingSession() {
+    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
+    // console.warn("SESSION ID terminateVideoCallingSession: " + sessionID.toString());
+    let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
+    // console.warn("PHONE NUMBER CALLED terminateVideoCallingSession: " + phoneNumberCalled);
+    let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
+    // console.warn("PHONE NUMBER CALLED terminateVideoCallingSession: " + phoneNumberCalled);
+
+    videoCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.usedTime);
+}
