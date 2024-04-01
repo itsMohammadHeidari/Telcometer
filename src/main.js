@@ -1046,3 +1046,15 @@ export function updateVoiceCallingCalledSession() {
     voiceCalledUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.requestedTime, userData[0].get.usedTime);
     sleep(30);
 }
+
+export function updateVideoCallingSession() {
+    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
+    // console.warn("SESSION ID updateVideoCallingSession: " + sessionID.toString());
+    let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
+    // console.warn("PHONE NUMBER CALLED updateVideoCallingSession: " + phoneNumberCalled);
+    let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
+    // console.warn("PHONE NUMBER CALLED updateVideoCallingSession: " + phoneNumberCalled);
+
+    videoCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.requestedTime, userData[0].get.usedTime);
+    sleep(5);
+}
