@@ -19,3 +19,13 @@ export const app = new SharedArray("diameter application ids", function () {
         }
     ]
 });
+
+export const vendor = new SharedArray("diameter application vendor ids", function () {
+    return [
+        {
+            get: {
+                TGPP: 10415
+            }
+        }
+    ]
+});
