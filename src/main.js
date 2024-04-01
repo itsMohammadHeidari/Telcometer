@@ -710,3 +710,76 @@ function videoCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, re
 
     console.log(`CCA: ${cca}`)
 }
+
+function dataTerminate(sessionID, phoneNumber) {
+
+    let data_terminate_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
+
+    data_terminate_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    data_terminate_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.DiameterIdentity(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
+    data_terminate_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
+    data_terminate_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
+    data_terminate_session_ccr.add(avp.New(code[0].get.DestinationHost, 0, flag[0].get.M, diamType.DiameterIdentity(`CGR-DA.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
+    data_terminate_session_ccr.add(avp.New(code[0].get.AuthApplicationId, 0, flag[0].get.M, diamType.Unsigned32(4)))
+    data_terminate_session_ccr.add(avp.New(code[0].get.ServiceContextId, 0, flag[0].get.M, diamType.UTF8String("32251@3gpp.org")))
+    data_terminate_session_ccr.add(avp.New(code[0].get.CCRequestType, 0, flag[0].get.M, diamType.Enumerated(3)))
+    data_terminate_session_ccr.add(avp.New(code[0].get.CCRequestNumber, 0, flag[0].get.M, diamType.Unsigned32(1)))
+    data_terminate_session_ccr.add(avp.New(code[0].get.EventTimestamp, 0, flag[0].get.M, diamType.Time(new Date(Date.now()))))
+    data_terminate_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
+        avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(1)),
+        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(`${userData[0].get.preMiddleFix}${phoneNumber}`))
+    ])))
+    data_terminate_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
+        avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
+        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(`${userData[0].get.zz}${phoneNumber}`))
+    ])))
+    data_terminate_session_ccr.add(avp.New(code[0].get.TerminationCause, 0, flag[0].get.M, diamType.Enumerated(1)))
+    data_terminate_session_ccr.add(avp.New(code[0].get.RequestedAction, 0, flag[0].get.M, diamType.Enumerated(0)))
+    data_terminate_session_ccr.add(avp.New(code[0].get.AoCRequestType, vendor[0].get.TGPP, (flag[0].get.V) | (flag[0].get.M), diamType.Enumerated(1)))
+    data_terminate_session_ccr.add(avp.New(code[0].get.MultipleServicesCreditControl, 0, flag[0].get.M, diamType.Grouped([
+        avp.New(code[0].get.UsedServiceUnit, 0, flag[0].get.M, diamType.Grouped([
+            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(0)),
+            avp.New(code[0].get.CCInputOctets, 0, flag[0].get.M, diamType.Unsigned64(cfg[0].get.downloadedBytes)),
+            avp.New(code[0].get.CCOutputOctets, 0, flag[0].get.M, diamType.Unsigned64(cfg[0].get.uploadedBytes))
+        ])),
+        avp.New(code[0].get.ReportingReason, 0, flag[0].get.M, diamType.Enumerated(2)),
+        avp.New(code[0].get.QoSInformation, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
+            avp.New(code[0].get.QoSClassIdentifier, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Enumerated(9)),
+            avp.New(code[0].get.AllocationRetentionPriority, vendor[0].get.TGPP, flag[0].get.V, diamType.Grouped([
+                avp.New(code[0].get.PriorityLevel, vendor[0].get.TGPP, flag[0].get.V, diamType.Enumerated(8)),
+                avp.New(code[0].get.PreemptionCapability, vendor[0].get.TGPP, flag[0].get.V, diamType.Enumerated(1)),
+                avp.New(code[0].get.PreemptionVulnerability, vendor[0].get.TGPP, flag[0].get.V, diamType.Enumerated(1))
+            ])),
+            avp.New(code[0].get.APNAggregateMaxBitrateUL, vendor[0].get.TGPP, flag[0].get.V, diamType.Unsigned32(cfg[0].get.BitrateUL)),
+            avp.New(code[0].get.APNAggregateMaxBitrateDL, vendor[0].get.TGPP, flag[0].get.V, diamType.Unsigned32(cfg[0].get.BitrateDL))
+        ])),
+        avp.New(code[0].get.TGPPRATType, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.OctetString("06")),
+    ])))
+    data_terminate_session_ccr.add(avp.New(code[0].get.ServiceInformation, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
+        avp.New(code[0].get.PSInformation, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
+            avp.New(code[0].get.TGPPChargingId, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.OctetString("0000000b")),
+            avp.New(code[0].get.PDPAddress, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Address("10.45.0.3")),
+            avp.New(code[0].get.SGSNAddress, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Address("127.0.0.3")),
+            avp.New(code[0].get.GGSNAddress, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Address("127.0.0.4")),
+            avp.New(code[0].get.GGSNAddress, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Address("127.0.0.4")),
+
+            avp.New(code[0].get.CalledStationId, 0, flag[0].get.M, diamType.UTF8String("internet")),
+            avp.New(code[0].get.TGPPSelectionMode, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String("0")),
+            avp.New(code[0].get.TGPPSGSNMCCMNC, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String(`${cfg[0].get.MCC}20`)),
+            avp.New(code[0].get.TGPPNSAPI, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String("\\005")),
+            avp.New(code[0].get.TGPPMSTimeZone, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.OctetString(userData[0].get.timeZone)),
+            avp.New(code[0].get.TGPPUserLocationInfo, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String(userData[0].get.userLocationInfo)),
+            avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
+                avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
+                avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts]))
+            ]))
+        ]))
+    ])))
+
+    client.connect(cfg[0].get.diamClient)
+
+    let cca = client.send(data_terminate_session_ccr);
+
+    console.log(`CCA: ${cca}`)
+
+}
