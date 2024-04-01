@@ -1023,3 +1023,13 @@ export function initVideoCallingSession() {
 
     videoCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime);
 }
+
+export function updateDataSession() {
+    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
+    // console.warn("SESSION ID updateDataSession: " + sessionID.toString());
+    let phoneNumber = userData[0].get.zz + sessionID.toString();
+    // console.warn("PHONE NUMBER updateDataSession: " + phoneNumber);
+
+    dataUpdate(sessionID, phoneNumber);
+    sleep(5);
+}
