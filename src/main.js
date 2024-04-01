@@ -852,3 +852,71 @@ function voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled,
 
     console.log(`CCA: ${cca}`)
 }
+
+function voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled, usedTime) {
+
+    let voice_called_terminate_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
+
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.UTF8String(`scscf.ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.UTF8String(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.UTF8String(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.AccountingRecordType, 0, flag[0].get.M, diamType.Enumerated(4)))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.AccountingRecordNumber, 0, flag[0].get.M, diamType.Unsigned32(0)))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.UserName, 0, flag[0].get.M, diamType.UTF8String(`tel:${phoneNumberCalled}`)))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.ServiceContextId, 0, flag[0].get.M, diamType.UTF8String("ext.020.001.8.32260@3gpp.org")))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.ServiceInformation, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
+        avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
+            avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
+            avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(`tel:${phoneNumberCalled}`))
+        ])),
+        avp.New(code[0].get.IMSInformation, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
+            avp.New(code[0].get.EventType, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
+                avp.New(code[0].get.SIPMethod, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String("dummy")),
+                avp.New(code[0].get.Event, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String("dummy"))
+            ])),
+            avp.New(code[0].get.RoleOfNode, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Enumerated(1)),
+            avp.New(code[0].get.NodeFunctionality, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Enumerated(0)),
+            avp.New(code[0].get.UserSessionId, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String("tTOM6k7fswFpIZDJ3qy90g..@10.46.0.3")),
+            avp.New(code[0].get.CallingPartyAddress, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String(`sip:${phoneNumberCalling}@ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)),
+            avp.New(code[0].get.CalledPartyAddress, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String(`tel:${phoneNumberCalled}`)),
+            avp.New(code[0].get.TrunkGroupId, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
+                avp.New(code[0].get.OutgoingTrunkGroupId, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Unsigned32(0)),
+                avp.New(code[0].get.IncomingTrunkGroupId, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Unsigned32(0))
+            ])),
+            avp.New(code[0].get.TimeStamps, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
+                avp.New(code[0].get.SIPRequestTimestamp, vendor[0].get.TGPP, flag[0].get.V, diamType.Time(new Date(Date.now())))
+            ]))
+        ]))
+    ])))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.VendorSpecificApplicationId, 0, flag[0].get.M, diamType.Grouped([
+        avp.New(code[0].get.VendorId, 0, flag[0].get.M, diamType.Unsigned32(10415)),
+        avp.New(code[0].get.AuthApplicationId, 0, flag[0].get.M, diamType.Enumerated(4)),
+    ])))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.CCRequestType, 0, flag[0].get.M, diamType.Enumerated(3)))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.CCRequestNumber, 0, flag[0].get.M, diamType.Unsigned32(9)))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.EventTimestamp, 0, flag[0].get.M, diamType.Time(new Date(Date.now()))))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
+        avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
+        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts]))
+    ])))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
+        avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
+        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(`tel:${phoneNumberCalled}`))
+    ])))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.MultipleServicesIndicator, 0, flag[0].get.M, diamType.Enumerated(1)))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.MultipleServicesCreditControl, 0, flag[0].get.M, diamType.Grouped([
+        avp.New(code[0].get.UsedServiceUnit, 0, flag[0].get.M, diamType.Grouped([
+            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(usedTime)),
+        ])),
+        avp.New(code[0].get.ServiceIdentifier, 0, flag[0].get.M, diamType.Unsigned32(1000)),
+        avp.New(code[0].get.RatingGroup, 0, flag[0].get.M, diamType.Unsigned32(100))
+    ])))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.TerminationCause, 0, flag[0].get.M, diamType.Enumerated(1)))
+
+    client.connect(cfg[0].get.diamClient)
+
+    let cca = client.send(voice_called_terminate_session_ccr);
+
+    console.log(`CCA: ${cca}`);
+}
