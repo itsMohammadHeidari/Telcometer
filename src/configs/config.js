@@ -1,6 +1,6 @@
-import { sleep } from 'k6';
+// import { sleep } from 'k6';
 import { SharedArray } from 'k6/data';
-sleep(1);
+// sleep(1);
 
 export const cfg = new SharedArray("constant data", function () {
     return [

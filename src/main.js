@@ -5,7 +5,6 @@ import diam from 'k6/x/diameter';
 import avp from 'k6/x/diameter/avp';
 import { cfg } from './configs/config.js';
 import { cmd, app, vendor, flag, code, userData } from './common/data.js';
-sleep(1);
 
 let diamType = diam.DataType();
 
