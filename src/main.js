@@ -318,7 +318,7 @@ function voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled, reque
             avp.New(code[0].get.NodeFunctionality, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Enumerated(0)),
             avp.New(code[0].get.UserSessionId, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String("tTOM6k7fswFpIZDJ3qy90g..@10.46.0.3")),
             avp.New(code[0].get.CallingPartyAddress, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String(`sip:${phoneNumberCalling}@ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)),
-            avp.New(code[0].get.CalledPartyAddress, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String(`sip:${phoneNumberCalling}@ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)),
+            avp.New(code[0].get.CalledPartyAddress, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String(`tel:${phoneNumberCalled}`)),
             avp.New(code[0].get.TrunkGroupId, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
                 avp.New(code[0].get.OutgoingTrunkGroupId, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Unsigned32(0)),
                 avp.New(code[0].get.IncomingTrunkGroupId, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Unsigned32(0)),
