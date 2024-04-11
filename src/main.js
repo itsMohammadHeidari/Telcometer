@@ -6,9 +6,9 @@ import avp from 'k6/x/diameter/avp';
 import { cfg } from './configs/config.js';
 import { cmd, app, vendor, flag, code, userData } from './common/data.js';
 
-let diamType = diam.DataType();
+const diamType = diam.DataType();
 
-let client = diam.Client({
+const client = diam.Client({
     // Timeout for each request
     requestTimeout: "100ms",
 
@@ -27,7 +27,7 @@ let client = diam.Client({
     ],
     capabilityExchange: {
         vendorId: 35838,
-        OriginHost: "epc.mnc020.mcc418.3gppnetwork.org"
+        OriginHost: "epc.mnc020.mcc418.3gppnetwork.org",
     },
 });
 
@@ -44,7 +44,7 @@ export const options = {
     // Configure DNS resolution behavior
     dns: {
         ttl: '5m',
-        select: 'random',
+        select: 'first',
         policy: 'onlyIPv4',
     },
 
