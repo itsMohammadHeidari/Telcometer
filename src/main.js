@@ -224,7 +224,7 @@ function dataInit(sessionID, phoneNumber) {
     console.log(`CCA: ${cca}`)
 }
 
-function voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime) {
+function voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let voice_calling_init_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
@@ -279,7 +279,7 @@ function voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled, requ
     voice_calling_init_session_ccr.add(avp.New(code[0].get.MultipleServicesIndicator, 0, flag[0].get.M, diamType.Enumerated(1)))
     voice_calling_init_session_ccr.add(avp.New(code[0].get.MultipleServicesCreditControl, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.RequestedServiceUnit, 0, flag[0].get.M, diamType.Grouped([
-            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(requestedTime))
+            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(cfg[0].get.voiceCallRequestedTime))
         ])),
         avp.New(code[0].get.ServiceIdentifier, 0, flag[0].get.M, diamType.Unsigned32(1000)),
         avp.New(code[0].get.RatingGroup, 0, flag[0].get.M, diamType.Unsigned32(100)),
@@ -292,7 +292,7 @@ function voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled, requ
     console.log(`CCA: ${cca}`)
 }
 
-function voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime) {
+function voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let voice_called_init_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
@@ -346,7 +346,7 @@ function voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled, reque
     voice_called_init_session_ccr.add(avp.New(code[0].get.MultipleServicesIndicator, 0, flag[0].get.M, diamType.Enumerated(1)))
     voice_called_init_session_ccr.add(avp.New(code[0].get.MultipleServicesCreditControl, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.RequestedServiceUnit, 0, flag[0].get.M, diamType.Grouped([
-            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(requestedTime))
+            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(cfg[0].get.voiceCallRequestedTime))
         ])),
         avp.New(code[0].get.ServiceIdentifier, 0, flag[0].get.M, diamType.Unsigned32(1000)),
         avp.New(code[0].get.RatingGroup, 0, flag[0].get.M, diamType.Unsigned32(100)),
@@ -500,7 +500,7 @@ function dataUpdate(sessionID, phoneNumber) {
     console.log(`CCA: ${cca}`)
 }
 
-function voiceCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime, usedTime) {
+function voiceCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let voice_calling_update_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
@@ -555,12 +555,12 @@ function voiceCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, re
     voice_calling_update_session_ccr.add(avp.New(code[0].get.MultipleServicesIndicator, 0, flag[0].get.M, diamType.Enumerated(1)))
     voice_calling_update_session_ccr.add(avp.New(code[0].get.MultipleServicesCreditControl, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.RequestedServiceUnit, 0, flag[0].get.M, diamType.Grouped([
-            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(requestedTime))
+            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(cfg[0].get.voiceCallRequestedTime))
         ])),
         avp.New(code[0].get.ServiceIdentifier, 0, flag[0].get.M, diamType.Unsigned32(1000)),
         avp.New(code[0].get.RatingGroup, 0, flag[0].get.M, diamType.Unsigned32(100)),
         avp.New(code[0].get.UsedServiceUnit, 0, flag[0].get.M, diamType.Grouped([
-            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(usedTime))
+            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(cfg[0].get.voiceCallUsedTime))
         ])),
     ])))
 
@@ -571,7 +571,7 @@ function voiceCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, re
     console.log(`CCA: ${cca}`)
 }
 
-function voiceCalledUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime, usedTime) {
+function voiceCalledUpdate(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let voice_called_update_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
@@ -626,12 +626,12 @@ function voiceCalledUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, req
     voice_called_update_session_ccr.add(avp.New(code[0].get.MultipleServicesIndicator, 0, flag[0].get.M, diamType.Enumerated(1)))
     voice_called_update_session_ccr.add(avp.New(code[0].get.MultipleServicesCreditControl, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.RequestedServiceUnit, 0, flag[0].get.M, diamType.Grouped([
-            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(requestedTime))
+            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(cfg[0].get.voiceCallRequestedTime))
         ])),
         avp.New(code[0].get.ServiceIdentifier, 0, flag[0].get.M, diamType.Unsigned32(1000)),
         avp.New(code[0].get.RatingGroup, 0, flag[0].get.M, diamType.Unsigned32(100)),
         avp.New(code[0].get.UsedServiceUnit, 0, flag[0].get.M, diamType.Grouped([
-            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(usedTime))
+            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(cfg[0].get.voiceCallUsedTime))
         ])),
     ])))
 
@@ -786,7 +786,7 @@ function dataTerminate(sessionID, phoneNumber) {
 
 }
 
-function voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled, usedTime) {
+function voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let voice_calling_terminate_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
@@ -841,7 +841,7 @@ function voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled,
     voice_calling_terminate_session_ccr.add(avp.New(code[0].get.MultipleServicesIndicator, 0, flag[0].get.M, diamType.Enumerated(1)))
     voice_calling_terminate_session_ccr.add(avp.New(code[0].get.MultipleServicesCreditControl, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.UsedServiceUnit, 0, flag[0].get.M, diamType.Grouped([
-            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(usedTime)),
+            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(cfg[0].get.voiceCallUsedTime)),
         ])),
         avp.New(code[0].get.ServiceIdentifier, 0, flag[0].get.M, diamType.Unsigned32(1000)),
         avp.New(code[0].get.RatingGroup, 0, flag[0].get.M, diamType.Unsigned32(100))
@@ -855,7 +855,7 @@ function voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled,
     console.log(`CCA: ${cca}`)
 }
 
-function voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled, usedTime) {
+function voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let voice_called_terminate_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
@@ -909,7 +909,7 @@ function voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled, 
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.MultipleServicesIndicator, 0, flag[0].get.M, diamType.Enumerated(1)))
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.MultipleServicesCreditControl, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.UsedServiceUnit, 0, flag[0].get.M, diamType.Grouped([
-            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(usedTime)),
+            avp.New(code[0].get.CCTime, 0, flag[0].get.M, diamType.Unsigned32(cfg[0].get.usedTime)),
         ])),
         avp.New(code[0].get.ServiceIdentifier, 0, flag[0].get.M, diamType.Unsigned32(1000)),
         avp.New(code[0].get.RatingGroup, 0, flag[0].get.M, diamType.Unsigned32(100))
@@ -1008,10 +1008,9 @@ export function initVoiceCallingCalledSession() {
     // console.warn("PHONE NUMBER CALLING initVoiceCallingCalledSession: " + phoneNumberCalling);
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
     // console.warn("PHONE NUMBER CALLED initVoiceCallingCalledSession: " + phoneNumberCalled);
-    const requestedTime = 0;
 
-    voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime);
-    voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime);
+    voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled);
 }
 
 export function initVideoCallingSession() {
@@ -1044,9 +1043,9 @@ export function updateVoiceCallingCalledSession() {
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
     // console.warn("PHONE NUMBER CALLED updateVoiceCallingCalledSession: " + phoneNumberCalled);
 
-    voiceCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.requestedTime, userData[0].get.usedTime);
-    voiceCalledUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.requestedTime, userData[0].get.usedTime);
-    sleep(30);
+    voiceCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCalledUpdate(sessionID, phoneNumberCalling, phoneNumberCalled);
+    sleep(cfg[0].get.voiceCallRequestedTime);
 }
 
 export function updateVideoCallingSession() {
@@ -1077,8 +1076,8 @@ export function terminateVoiceCallingCalledSession() {
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
     // console.warn("PHONE NUMBER CALLED terminateVoiceCallingCalledSession: " + phoneNumberCalled);
 
-    voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.usedTime);
-    voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.usedTime);
+    voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled);
 }
 
 export function terminateVideoCallingSession() {
