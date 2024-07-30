@@ -1041,7 +1041,7 @@ export function updateVideoCallingSession() {
     let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
 
-    videoCallingUpdate("4" + sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.requestedTime, userData[0].get.usedTime);
+    videoCallingUpdate("4" + sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.videoRequestedTime, userData[0].get.videoUsedTime);
     sleep(5);
 }
 

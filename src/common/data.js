@@ -132,8 +132,10 @@ export const userData = new SharedArray("user constant data", function () {
                 zz: "00",
                 timeZone: "GMT + 3 hours 30 minutes No adjustment",
                 userLocationInfo: "MCC 418 Iraq, MNC 20 Zain Iraq (previously Atheer), ECGI 0x10b",
-                callRequestedTime: 0,
-                callUsedTime: 0,
+                callRequestedTime: 30,
+                callUsedTime: 5,
+                videoRequestedTime: 30,
+                videoUsedTime: 5,
             }
         }
     ]
