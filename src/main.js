@@ -342,7 +342,7 @@ function voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled) {
     ])))
     voice_called_init_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(`${userData[0].get.zz}${phoneNumberCalled}`))
+        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(phoneNumberCalled))
     ])))
     voice_called_init_session_ccr.add(avp.New(code[0].get.MultipleServicesIndicator, 0, flag[0].get.M, diamType.Enumerated(1)))
     voice_called_init_session_ccr.add(avp.New(code[0].get.MultipleServicesCreditControl, 0, flag[0].get.M, diamType.Grouped([
@@ -622,7 +622,7 @@ function voiceCalledUpdate(sessionID, phoneNumberCalling, phoneNumberCalled) {
     ])))
     voice_called_update_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(`${userData[0].get.zz}${phoneNumberCalled}`))
+        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(phoneNumberCalled))
     ])))
     voice_called_update_session_ccr.add(avp.New(code[0].get.MultipleServicesIndicator, 0, flag[0].get.M, diamType.Enumerated(1)))
     voice_called_update_session_ccr.add(avp.New(code[0].get.MultipleServicesCreditControl, 0, flag[0].get.M, diamType.Grouped([
@@ -871,7 +871,7 @@ function voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled) 
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.ServiceInformation, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
             avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
-            avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(`tel:${phoneNumberCalled}`))
+            avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(phoneNumberCalled))
         ])),
         avp.New(code[0].get.IMSInformation, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
             avp.New(code[0].get.EventType, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
@@ -905,7 +905,7 @@ function voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled) 
     ])))
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(`tel:${phoneNumberCalled}`))
+        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(phoneNumberCalled))
     ])))
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.MultipleServicesIndicator, 0, flag[0].get.M, diamType.Enumerated(1)))
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.MultipleServicesCreditControl, 0, flag[0].get.M, diamType.Grouped([
