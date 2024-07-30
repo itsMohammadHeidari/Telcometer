@@ -172,7 +172,7 @@ function dataInit(sessionID, phoneNumber) {
     ])))
     data_init_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(`${userData[0].get.zz}${phoneNumber}`))
+        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(phoneNumber))
     ])))
     data_init_session_ccr.add(avp.New(code[0].get.RequestedAction, 0, flag[0].get.M, diamType.Enumerated(0)))
     data_init_session_ccr.add(avp.New(code[0].get.AoCRequestType, vendor[0].get.TGPP, (flag[0].get.V) | (flag[0].get.M), diamType.Enumerated(1)))
@@ -448,7 +448,7 @@ function dataUpdate(sessionID, phoneNumber) {
     ])))
     data_update_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(`${userData[0].get.zz}${phoneNumber}`))
+        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(phoneNumber))
     ])))
     data_update_session_ccr.add(avp.New(code[0].get.RequestedAction, 0, flag[0].get.M, diamType.Enumerated(0)))
     data_update_session_ccr.add(avp.New(code[0].get.AoCRequestType, vendor[0].get.TGPP, (flag[0].get.V) | (flag[0].get.M), diamType.Enumerated(1)))
@@ -734,7 +734,7 @@ function dataTerminate(sessionID, phoneNumber) {
     ])))
     data_terminate_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(`${userData[0].get.zz}${phoneNumber}`))
+        avp.New(code[0].get.SubscriptionIdData, 0, flag[0].get.M, diamType.UTF8String(phoneNumber))
     ])))
     data_terminate_session_ccr.add(avp.New(code[0].get.TerminationCause, 0, flag[0].get.M, diamType.Enumerated(1)))
     data_terminate_session_ccr.add(avp.New(code[0].get.RequestedAction, 0, flag[0].get.M, diamType.Enumerated(0)))
