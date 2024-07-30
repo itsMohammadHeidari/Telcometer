@@ -995,99 +995,76 @@ function videoCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled,
 
 export function initDataSession() {
     let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    // console.warn("SESSION ID initDataSession: " + sessionID.toString());
     let phoneNumber = userData[0].get.zz + sessionID.toString();
-    // console.warn("PHONE NUMBER initDataSession: " + phoneNumber);
 
-    dataInit(sessionID, phoneNumber);
+    dataInit("1" + sessionID, phoneNumber);
 }
 
 export function initVoiceCallingCalledSession() {
     let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    // console.warn("SESSION ID initVoiceCallingCalledSession: " + sessionID.toString());
     let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
-    // console.warn("PHONE NUMBER CALLING initVoiceCallingCalledSession: " + phoneNumberCalling);
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
-    // console.warn("PHONE NUMBER CALLED initVoiceCallingCalledSession: " + phoneNumberCalled);
 
-    voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled);
-    voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCallingInit("2" + sessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCalledInit("3" + sessionID, phoneNumberCalling, phoneNumberCalled);
 }
 
 export function initVideoCallingSession() {
     let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    // console.warn("SESSION ID initVideoCallingSession: " + sessionID.toString());
     let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
-    // console.warn("PHONE NUMBER CALLED initVideoCallingSession: " + phoneNumberCalled);
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
-    // console.warn("PHONE NUMBER CALLED initVideoCallingSession: " + phoneNumberCalled);
     const requestedTime = 0;
 
-    videoCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime);
+    videoCallingInit("4" + sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime);
 }
 
 export function updateDataSession() {
     let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    // console.warn("SESSION ID updateDataSession: " + sessionID.toString());
     let phoneNumber = userData[0].get.zz + sessionID.toString();
-    // console.warn("PHONE NUMBER updateDataSession: " + phoneNumber);
 
-    dataUpdate(sessionID, phoneNumber);
+    dataUpdate("1" + sessionID, phoneNumber);
     sleep(5);
 }
 
 export function updateVoiceCallingCalledSession() {
     let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    // console.warn("SESSION ID updateVoiceCallingCalledSession: " + sessionID.toString());
     let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
-    // console.warn("PHONE NUMBER CALLING updateVoiceCallingCalledSession: " + phoneNumberCalling);
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
-    // console.warn("PHONE NUMBER CALLED updateVoiceCallingCalledSession: " + phoneNumberCalled);
 
-    voiceCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled);
-    voiceCalledUpdate(sessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCallingUpdate("2" + sessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCalledUpdate("3" + sessionID, phoneNumberCalling, phoneNumberCalled);
     sleep(cfg[0].get.voiceCallRequestedTime);
 }
 
 export function updateVideoCallingSession() {
     let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    // console.warn("SESSION ID updateVideoCallingSession: " + sessionID.toString());
     let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
-    // console.warn("PHONE NUMBER CALLED updateVideoCallingSession: " + phoneNumberCalled);
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
-    // console.warn("PHONE NUMBER CALLED updateVideoCallingSession: " + phoneNumberCalled);
 
-    videoCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.requestedTime, userData[0].get.usedTime);
+    videoCallingUpdate("4" + sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.requestedTime, userData[0].get.usedTime);
     sleep(5);
 }
 
 export function terminateDataSession() {
     let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    // console.warn("SESSION ID terminateDataSession: " + sessionID.toString());
     let phoneNumber = userData[0].get.zz + sessionID.toString();
-    // console.warn("PHONE NUMBER terminateDataSession: " + phoneNumber);
 
-    dataTerminate(sessionID, phoneNumber);
+    dataTerminate("1" + sessionID, phoneNumber);
 }
 
 export function terminateVoiceCallingCalledSession() {
     let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    // console.warn("SESSION ID terminateVoiceCallingCalledSession: " + sessionID.toString());
     let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
-    // console.warn("PHONE NUMBER CALLED terminateVoiceCallingCalledSession: " + phoneNumberCalled);
 
-    voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled);
-    voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCallingTerminate("2" + sessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCalledTerminate("3" + sessionID, phoneNumberCalling, phoneNumberCalled);
 }
 
 export function terminateVideoCallingSession() {
     let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    // console.warn("SESSION ID terminateVideoCallingSession: " + sessionID.toString());
     let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
-    // console.warn("PHONE NUMBER CALLED terminateVideoCallingSession: " + phoneNumberCalled);
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
-    // console.warn("PHONE NUMBER CALLED terminateVideoCallingSession: " + phoneNumberCalled);
 
-    videoCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.usedTime);
+    videoCallingTerminate("4" + sessionID, phoneNumberCalling, phoneNumberCalled, userData[0].get.usedTime);
 }
