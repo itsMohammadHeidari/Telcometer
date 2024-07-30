@@ -221,7 +221,7 @@ function dataInit(sessionID, phoneNumber) {
 
     let cca = client.send(data_init_session_ccr);
 
-    console.log(`CCA: ${cca}`)
+    // console.log(`CCA: ${cca}`)
 }
 
 function voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled) {
@@ -290,7 +290,7 @@ function voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let cca = client.send(voice_calling_init_session_ccr);
 
-    console.log(`CCA: ${cca}`)
+    // console.log(`CCA: ${cca}`)
 }
 
 function voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled) {
@@ -357,7 +357,7 @@ function voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let cca = client.send(voice_called_init_session_ccr);
 
-    console.log(`CCA: ${cca}`)
+    // console.log(`CCA: ${cca}`)
 }
 
 function videoCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime) {
@@ -425,7 +425,7 @@ function videoCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled, requ
 
     let cca = client.send(video_calling_init_session_ccr);
 
-    console.log(`CCA: ${cca}`)
+    // console.log(`CCA: ${cca}`)
 }
 
 function dataUpdate(sessionID, phoneNumber) {
@@ -498,7 +498,7 @@ function dataUpdate(sessionID, phoneNumber) {
 
     let cca = client.send(data_update_session_ccr);
 
-    console.log(`CCA: ${cca}`)
+    // console.log(`CCA: ${cca}`)
 }
 
 function voiceCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled) {
@@ -569,7 +569,7 @@ function voiceCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let cca = client.send(voice_calling_update_session_ccr);
 
-    console.log(`CCA: ${cca}`)
+    // console.log(`CCA: ${cca}`)
 }
 
 function voiceCalledUpdate(sessionID, phoneNumberCalling, phoneNumberCalled) {
@@ -640,7 +640,7 @@ function voiceCalledUpdate(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let cca = client.send(voice_called_update_session_ccr);
 
-    console.log(`CCA: ${cca}`)
+    // console.log(`CCA: ${cca}`)
 }
 
 function videoCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, requestedTime, usedTime) {
@@ -711,7 +711,7 @@ function videoCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, re
 
     let cca = client.send(video_calling_update_session_ccr);
 
-    console.log(`CCA: ${cca}`)
+    // console.log(`CCA: ${cca}`)
 }
 
 function dataTerminate(sessionID, phoneNumber) {
@@ -783,7 +783,7 @@ function dataTerminate(sessionID, phoneNumber) {
 
     let cca = client.send(data_terminate_session_ccr);
 
-    console.log(`CCA: ${cca}`)
+    // console.log(`CCA: ${cca}`)
 
 }
 
@@ -853,7 +853,7 @@ function voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled)
 
     let cca = client.send(voice_calling_terminate_session_ccr);
 
-    console.log(`CCA: ${cca}`)
+    // console.log(`CCA: ${cca}`)
 }
 
 function voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled) {
@@ -921,7 +921,7 @@ function voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled) 
 
     let cca = client.send(voice_called_terminate_session_ccr);
 
-    console.log(`CCA: ${cca}`);
+    // console.log(`CCA: ${cca}`);
 }
 
 function videoCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled, usedTime) {
@@ -990,7 +990,7 @@ function videoCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled,
 
     let cca = client.send(video_calling_terminate_session_ccr);
 
-    console.log(`CCA: ${cca}`)
+    // console.log(`CCA: ${cca}`)
 }
 
 export function initDataSession() {
