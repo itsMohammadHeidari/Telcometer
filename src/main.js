@@ -153,7 +153,7 @@ export const IMEISVs = new SharedArray("an array containing IMEISV for accounts"
 function dataInit(sessionID, phoneNumber) {
 
     let data_init_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
-    data_init_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    data_init_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};${sessionID}`)))
     data_init_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.DiameterIdentity(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     data_init_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     data_init_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
@@ -228,7 +228,7 @@ function voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let voice_calling_init_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
-    voice_calling_init_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    voice_calling_init_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};${sessionID}`)))
     voice_calling_init_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.DiameterIdentity(`scscf.ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_calling_init_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_calling_init_session_ccr.add(avp.New(code[0].get.DestinationHost, 0, flag[0].get.M, diamType.DiameterIdentity("hssocs.voiceblue.com")))
@@ -297,7 +297,7 @@ function voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let voice_called_init_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
-    voice_called_init_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    voice_called_init_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};${sessionID}`)))
     voice_called_init_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.DiameterIdentity(`scscf.ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_called_init_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_called_init_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
@@ -364,7 +364,7 @@ function videoCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled, requ
 
     let video_calling_init_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
-    video_calling_init_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    video_calling_init_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};${sessionID}`)))
     video_calling_init_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.DiameterIdentity(`scscf.ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     video_calling_init_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     video_calling_init_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
@@ -432,7 +432,7 @@ function dataUpdate(sessionID, phoneNumber) {
 
     let data_update_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
-    data_update_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    data_update_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};${sessionID}`)))
     data_update_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.DiameterIdentity(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     data_update_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     data_update_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
@@ -505,7 +505,7 @@ function voiceCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let voice_calling_update_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
-    voice_calling_update_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    voice_calling_update_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};${sessionID}`)))
     voice_calling_update_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.DiameterIdentity(`scscf.ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_calling_update_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_calling_update_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
@@ -576,7 +576,7 @@ function voiceCalledUpdate(sessionID, phoneNumberCalling, phoneNumberCalled) {
 
     let voice_called_update_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
-    voice_called_update_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    voice_called_update_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};${sessionID}`)))
     voice_called_update_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.DiameterIdentity(`scscf.ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_called_update_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_called_update_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
@@ -647,7 +647,7 @@ function videoCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled, re
 
     let video_calling_update_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
-    video_calling_update_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    video_calling_update_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};${sessionID}`)))
     video_calling_update_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.DiameterIdentity(`scscf.ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     video_calling_update_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     video_calling_update_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
@@ -718,7 +718,7 @@ function dataTerminate(sessionID, phoneNumber) {
 
     let data_terminate_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
-    data_terminate_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    data_terminate_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};${sessionID}`)))
     data_terminate_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.DiameterIdentity(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     data_terminate_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     data_terminate_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
@@ -791,7 +791,7 @@ function voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled)
 
     let voice_calling_terminate_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
-    voice_calling_terminate_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    voice_calling_terminate_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};${sessionID}`)))
     voice_calling_terminate_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.UTF8String(`scscf.ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_calling_terminate_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.UTF8String(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_calling_terminate_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.UTF8String(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
@@ -860,7 +860,7 @@ function voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled) 
 
     let voice_called_terminate_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
-    voice_called_terminate_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};${sessionID}`)))
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.UTF8String(`scscf.ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.UTF8String(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.UTF8String(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
@@ -928,7 +928,7 @@ function videoCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled,
 
     let video_calling_terminate_session_ccr = diam.newMessage(cmd[0].get.CreditControl, app[0].get.ChargingControl);
 
-    video_calling_terminate_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
+    video_calling_terminate_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};${sessionID}`)))
     video_calling_terminate_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.UTF8String(`scscf.ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     video_calling_terminate_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.UTF8String(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     video_calling_terminate_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.UTF8String(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
