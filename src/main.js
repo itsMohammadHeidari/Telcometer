@@ -231,6 +231,7 @@ function voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled) {
     voice_calling_init_session_ccr.add(avp.New(code[0].get.SessionId, 0, flag[0].get.M, diamType.UTF8String(`smf.epc.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org;${sessionID};20`)))
     voice_calling_init_session_ccr.add(avp.New(code[0].get.OriginHost, 0, flag[0].get.M, diamType.DiameterIdentity(`scscf.ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_calling_init_session_ccr.add(avp.New(code[0].get.OriginRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
+    voice_calling_init_session_ccr.add(avp.New(code[0].get.DestinationHost, 0, flag[0].get.M, diamType.DiameterIdentity("hssocs.voiceblue.com")))
     voice_calling_init_session_ccr.add(avp.New(code[0].get.DestinationRealm, 0, flag[0].get.M, diamType.DiameterIdentity(`ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
     voice_calling_init_session_ccr.add(avp.New(code[0].get.AccountingRecordType, 0, flag[0].get.M, diamType.Enumerated(2)))
     voice_calling_init_session_ccr.add(avp.New(code[0].get.AccountingRecordNumber, 0, flag[0].get.M, diamType.Unsigned32(0)))
