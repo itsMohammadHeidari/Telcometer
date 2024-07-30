@@ -798,7 +798,7 @@ function voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled)
     voice_calling_terminate_session_ccr.add(avp.New(code[0].get.AccountingRecordType, 0, flag[0].get.M, diamType.Enumerated(4)))
     voice_calling_terminate_session_ccr.add(avp.New(code[0].get.AccountingRecordNumber, 0, flag[0].get.M, diamType.Unsigned32(0)))
     voice_calling_terminate_session_ccr.add(avp.New(code[0].get.UserName, 0, flag[0].get.M, diamType.UTF8String(`sip:${phoneNumberCalling}@ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
-    voice_calling_terminate_session_ccr.add(avp.New(code[0].get.ServiceContextId, 0, flag[0].get.M, diamType.UTF8String("ext.020.001.8.32260@3gpp.org")))
+    voice_calling_terminate_session_ccr.add(avp.New(code[0].get.ServiceContextId, 0, flag[0].get.M, diamType.UTF8String("ext.02.001.8.32260@3gpp.org")))
     voice_calling_terminate_session_ccr.add(avp.New(code[0].get.ServiceInformation, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
             avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(2)),
@@ -867,7 +867,7 @@ function voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled) 
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.AccountingRecordType, 0, flag[0].get.M, diamType.Enumerated(4)))
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.AccountingRecordNumber, 0, flag[0].get.M, diamType.Unsigned32(0)))
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.UserName, 0, flag[0].get.M, diamType.UTF8String(`tel:${phoneNumberCalled}`)))
-    voice_called_terminate_session_ccr.add(avp.New(code[0].get.ServiceContextId, 0, flag[0].get.M, diamType.UTF8String("ext.020.001.8.32260@3gpp.org")))
+    voice_called_terminate_session_ccr.add(avp.New(code[0].get.ServiceContextId, 0, flag[0].get.M, diamType.UTF8String("ext.02.001.8.32260@3gpp.org")))
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.ServiceInformation, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
             avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
@@ -935,7 +935,7 @@ function videoCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled,
     video_calling_terminate_session_ccr.add(avp.New(code[0].get.AccountingRecordType, 0, flag[0].get.M, diamType.Enumerated(4)))
     video_calling_terminate_session_ccr.add(avp.New(code[0].get.AccountingRecordNumber, 0, flag[0].get.M, diamType.Unsigned32(0)))
     video_calling_terminate_session_ccr.add(avp.New(code[0].get.UserName, 0, flag[0].get.M, diamType.UTF8String(`sip:${phoneNumberCalling}@ims.mnc${cfg[0].get.MNC}.mcc${cfg[0].get.MCC}.3gppnetwork.org`)))
-    video_calling_terminate_session_ccr.add(avp.New(code[0].get.ServiceContextId, 0, flag[0].get.M, diamType.UTF8String("ext.020.001.8.32260@3gpp.org")))
+    video_calling_terminate_session_ccr.add(avp.New(code[0].get.ServiceContextId, 0, flag[0].get.M, diamType.UTF8String("ext.02.001.8.32260@3gpp.org")))
     video_calling_terminate_session_ccr.add(avp.New(code[0].get.ServiceInformation, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
             avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(2)),
