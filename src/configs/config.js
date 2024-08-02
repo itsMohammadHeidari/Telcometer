@@ -1,6 +1,4 @@
-// import { sleep } from 'k6';
 import { SharedArray } from 'k6/data';
-// sleep(1);
 
 export const cfg = new SharedArray("constant data", function () {
     return [
@@ -15,8 +13,15 @@ export const cfg = new SharedArray("constant data", function () {
                 uploadedBytes: 2621424,
                 BitrateUL: 1073741000,
                 BitrateDL: 1073741000,
-                voiceCallRequestedTime: 30,
-                voiceCallUsedTime: 5,
+                dataRequestedTime: 5,
+                dataUsedtime: 30,
+                voiceRequestedTime: 10,
+                voiceCallUsedTime: 10,
+                videoRequestedTime: 30,
+                videoUsedTime: 5,
+                dataUpdateSenderIterations: 10,
+                voiceCallingCalledUpdateSenderIterations: 10,
+                videoUpdateSenderIterations: 10,
             }
         }
     ]
