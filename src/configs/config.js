@@ -4,6 +4,7 @@ export const cfg = new SharedArray("constant data", function () {
     return [
         {
             get: {
+                webdis_url: "http://127.0.0.1:7379/",
                 numberOfAccounts: 5,
                 MCC: "418",
                 MNC: "020",

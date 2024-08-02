@@ -1,7 +1,7 @@
 import { sleep } from 'k6';
 import { SharedArray } from 'k6/data';
-import { vu } from 'k6/execution';
 import diam from 'k6/x/diameter';
+import http from 'k6/http';
 import avp from 'k6/x/diameter/avp';
 import { cfg } from './configs/config.js';
 import { cmd, app, vendor, flag, code, userData } from './common/data.js';
@@ -49,7 +49,7 @@ export const options = {
     },
 
     // Specify whether response bodies should be discarded
-    discardResponseBodies: true,
+    discardResponseBodies: false,
 
     // Specify which System Tags will be in the collected metrics
     systemTags: ['error', 'error_code', 'scenario', 'vu', 'iter'],
@@ -130,6 +130,38 @@ export const options = {
         },
     },
 };
+
+export function setup() {
+    for (let i = 0; i < cfg[0].get.numberOfAccounts; i++) {
+        http.post(cfg[0].get.webdis_url, `LPUSH/data_init_sessionIds/${i}`);
+        http.post(cfg[0].get.webdis_url, `LPUSH/voice_calling_init_sessionIds/${i}`);
+        http.post(cfg[0].get.webdis_url, `LPUSH/voice_called_init_sessionIds/${i}`);
+        http.post(cfg[0].get.webdis_url, `LPUSH/video_calling_init_sessionIds/${i}`);
+        http.post(cfg[0].get.webdis_url, `LPUSH/data_terminate_sessionIds/${i}`);
+        http.post(cfg[0].get.webdis_url, `LPUSH/voice_calling_terminate_sessionIds/${i}`);
+        http.post(cfg[0].get.webdis_url, `LPUSH/voice_called_terminate_sessionIds/${i}`);
+        http.post(cfg[0].get.webdis_url, `LPUSH/video_calling_terminate_sessionIds/${i}`);
+    }
+
+    for (let iter = 0; iter < cfg[0].get.dataUpdateSenderIterations; iter++) {
+        for (let i = 0; i < cfg[0].get.numberOfAccounts; i++) {
+            http.post(cfg[0].get.webdis_url, `LPUSH/data_update_sessionIds/${i}`);
+        }
+    }
+
+    for (let iter = 0; iter < cfg[0].get.voiceCallingCalledUpdateSenderIterations; iter++) {
+        for (let i = 0; i < cfg[0].get.numberOfAccounts; i++) {
+            http.post(cfg[0].get.webdis_url, `LPUSH/voice_calling_update_sessionIds/${i}`);
+            http.post(cfg[0].get.webdis_url, `LPUSH/voice_called_update_sessionIds/${i}`);
+        }
+    }
+
+    for (let iter = 0; iter < cfg[0].get.videoUpdateSenderIterations; iter++) {
+        for (let i = 0; i < cfg[0].get.numberOfAccounts; i++) {
+            http.post(cfg[0].get.webdis_url, `LPUSH/video_calling_update_sessionIds/${i}`);
+        }
+    }
+}
 
 export const callingCalled = new SharedArray("an object represents who is calling and who is called", function () {
     let objCallingCalled = {};
@@ -212,7 +244,7 @@ function dataInit(sessionID, phoneNumber) {
             avp.New(code[0].get.TGPPUserLocationInfo, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String(userData[0].get.userLocationInfo)),
             avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
                 avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
-                avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts]))
+                avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[sessionID]))
             ]))
         ]))
     ])))
@@ -271,7 +303,7 @@ function voiceCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled) {
     voice_calling_init_session_ccr.add(avp.New(code[0].get.EventTimestamp, 0, flag[0].get.M, diamType.Time(new Date(Date.now()))))
     voice_calling_init_session_ccr.add(avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts]))
+        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[sessionID]))
     ])))
     voice_calling_init_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(2)),
@@ -338,7 +370,7 @@ function voiceCalledInit(sessionID, phoneNumberCalling, phoneNumberCalled) {
     voice_called_init_session_ccr.add(avp.New(code[0].get.EventTimestamp, 0, flag[0].get.M, diamType.Time(new Date(Date.now()))))
     voice_called_init_session_ccr.add(avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts]))
+        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[sessionID]))
     ])))
     voice_called_init_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
@@ -406,7 +438,7 @@ function videoCallingInit(sessionID, phoneNumberCalling, phoneNumberCalled) {
     video_calling_init_session_ccr.add(avp.New(code[0].get.EventTimestamp, 0, flag[0].get.M, diamType.Time(new Date(Date.now()))))
     video_calling_init_session_ccr.add(avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts]))
+        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[sessionID]))
     ])))
     video_calling_init_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(2)),
@@ -487,7 +519,7 @@ function dataUpdate(sessionID, phoneNumber) {
             avp.New(code[0].get.TGPPUserLocationInfo, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String(userData[0].get.userLocationInfo)),
             avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
                 avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
-                avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts])),
+                avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[sessionID])),
             ]))
         ]))
     ])))
@@ -547,7 +579,7 @@ function voiceCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled) {
     voice_calling_update_session_ccr.add(avp.New(code[0].get.EventTimestamp, 0, flag[0].get.M, diamType.Time(new Date(Date.now()))))
     voice_calling_update_session_ccr.add(avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts]))
+        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[sessionID]))
     ])))
     voice_calling_update_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(2)),
@@ -618,7 +650,7 @@ function voiceCalledUpdate(sessionID, phoneNumberCalling, phoneNumberCalled) {
     voice_called_update_session_ccr.add(avp.New(code[0].get.EventTimestamp, 0, flag[0].get.M, diamType.Time(new Date(Date.now()))))
     voice_called_update_session_ccr.add(avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts]))
+        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[sessionID]))
     ])))
     voice_called_update_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
@@ -689,7 +721,7 @@ function videoCallingUpdate(sessionID, phoneNumberCalling, phoneNumberCalled) {
     video_calling_update_session_ccr.add(avp.New(code[0].get.EventTimestamp, 0, flag[0].get.M, diamType.Time(new Date(Date.now()))))
     video_calling_update_session_ccr.add(avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts]))
+        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[sessionID]))
     ])))
     video_calling_update_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(2)),
@@ -774,7 +806,7 @@ function dataTerminate(sessionID, phoneNumber) {
             avp.New(code[0].get.TGPPUserLocationInfo, vendor[0].get.TGPP, flag[0].get.V | flag[0].get.M, diamType.UTF8String(userData[0].get.userLocationInfo)),
             avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
                 avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
-                avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts]))
+                avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[sessionID]))
             ]))
         ]))
     ])))
@@ -833,7 +865,7 @@ function voiceCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled)
     voice_calling_terminate_session_ccr.add(avp.New(code[0].get.EventTimestamp, 0, flag[0].get.M, diamType.Time(new Date(Date.now()))))
     voice_calling_terminate_session_ccr.add(avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts]))
+        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[sessionID]))
     ])))
     voice_calling_terminate_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(2)),
@@ -901,7 +933,7 @@ function voiceCalledTerminate(sessionID, phoneNumberCalling, phoneNumberCalled) 
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.EventTimestamp, 0, flag[0].get.M, diamType.Time(new Date(Date.now()))))
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts]))
+        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[sessionID]))
     ])))
     voice_called_terminate_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(0)),
@@ -970,7 +1002,7 @@ function videoCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled)
     video_calling_terminate_session_ccr.add(avp.New(code[0].get.EventTimestamp, 0, flag[0].get.M, diamType.Time(new Date(Date.now()))))
     video_calling_terminate_session_ccr.add(avp.New(code[0].get.UserEquipmentInfo, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.UserEquipmentInfoType, 0, flag[0].get.M, diamType.Enumerated(0)),
-        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[vu.idInTest % cfg[0].get.numberOfAccounts]))
+        avp.New(code[0].get.UserEquipmentInfoValue, 0, flag[0].get.M, diamType.OctetString(IMEISVs[sessionID]))
     ])))
     video_calling_terminate_session_ccr.add(avp.New(code[0].get.SubscriptionId, 0, flag[0].get.M, diamType.Grouped([
         avp.New(code[0].get.SubscriptionIdType, 0, flag[0].get.M, diamType.Enumerated(2)),
@@ -994,76 +1026,89 @@ function videoCallingTerminate(sessionID, phoneNumberCalling, phoneNumberCalled)
 }
 
 export function initDataSession() {
-    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
+    let res = http.get(`${cfg[0].get.webdis_url}LPOP/data_init_sessionIds`)
+    let sessionID = JSON.parse(res.body)['LPOP'];
     let phoneNumber = userData[0].get.zz + sessionID.toString();
-
     dataInit("1" + sessionID, phoneNumber);
 }
 
 export function initVoiceCallingCalledSession() {
-    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
+    let resCalling = http.get(`${cfg[0].get.webdis_url}LPOP/voice_calling_init_sessionIds`)
+    let callingSessionID = JSON.parse(resCalling.body)['LPOP'];
+    let resCalled = http.get(`${cfg[0].get.webdis_url}LPOP/voice_called_init_sessionIds`)
+    let calledSessionID = JSON.parse(resCalled.body)['LPOP'];
+    let phoneNumberCalling = userData[0].get.zz + callingSessionID.toString();
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
 
-    voiceCallingInit("2" + sessionID, phoneNumberCalling, phoneNumberCalled);
-    voiceCalledInit("3" + sessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCallingInit("2" + callingSessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCalledInit("3" + calledSessionID, phoneNumberCalling, phoneNumberCalled);
 }
 
 export function initVideoCallingSession() {
-    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
+    let resCalling = http.get(`${cfg[0].get.webdis_url}LPOP/video_calling_init_sessionIds`)
+    let callingSessionID = JSON.parse(resCalling.body)['LPOP'];
+    let phoneNumberCalling = userData[0].get.zz + callingSessionID.toString();
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
 
-    videoCallingInit("4" + sessionID, phoneNumberCalling, phoneNumberCalled);
+    videoCallingInit("4" + callingSessionID, phoneNumberCalling, phoneNumberCalled);
 }
 
 export function updateDataSession() {
-    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
+    let res = http.get(`${cfg[0].get.webdis_url}LPOP/data_update_sessionIds`)
+    let sessionID = JSON.parse(res.body)['LPOP'];
     let phoneNumber = userData[0].get.zz + sessionID.toString();
-
     dataUpdate("1" + sessionID, phoneNumber);
     sleep(cfg[0].get.dataRequestedTime);
 }
 
 export function updateVoiceCallingCalledSession() {
-    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
+    let resCalling = http.get(`${cfg[0].get.webdis_url}LPOP/voice_calling_update_sessionIds`)
+    let callingSessionID = JSON.parse(resCalling.body)['LPOP'];
+    let resCalled = http.get(`${cfg[0].get.webdis_url}LPOP/voice_called_update_sessionIds`)
+    let calledSessionID = JSON.parse(resCalled.body)['LPOP'];
+    let phoneNumberCalling = userData[0].get.zz + callingSessionID.toString();
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
 
-    voiceCallingUpdate("2" + sessionID, phoneNumberCalling, phoneNumberCalled);
-    voiceCalledUpdate("3" + sessionID, phoneNumberCalling, phoneNumberCalled);
-    sleep(cfg[0].get.voiceRequestedTime);
+    voiceCallingUpdate("2" + callingSessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCalledUpdate("3" + calledSessionID, phoneNumberCalling, phoneNumberCalled);
+    sleep(cfg[0].get.voiceCallRequestedTime);
 }
 
 export function updateVideoCallingSession() {
-    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
+    let resCalling = http.get(`${cfg[0].get.webdis_url}LPOP/video_calling_update_sessionIds`)
+    let callingSessionID = JSON.parse(resCalling.body)['LPOP'];
+    let phoneNumberCalling = userData[0].get.zz + callingSessionID.toString();
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
 
-    videoCallingUpdate("4" + sessionID, phoneNumberCalling, phoneNumberCalled);
-    sleep(cfg[0].get.videoRequestedTime);
+    videoCallingUpdate("4" + callingSessionID, phoneNumberCalling, phoneNumberCalled);
+    sleep(cfg[0].get.videoCallingRequestedTime);
 }
 
 export function terminateDataSession() {
-    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
+    let res = http.get(`${cfg[0].get.webdis_url}LPOP/data_terminate_sessionIds`)
+    let sessionID = JSON.parse(res.body)['LPOP'];
     let phoneNumber = userData[0].get.zz + sessionID.toString();
 
     dataTerminate("1" + sessionID, phoneNumber);
 }
 
 export function terminateVoiceCallingCalledSession() {
-    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
+    let resCalling = http.get(`${cfg[0].get.webdis_url}LPOP/voice_calling_terminate_sessionIds`)
+    let callingSessionID = JSON.parse(resCalling.body)['LPOP'];
+    let resCalled = http.get(`${cfg[0].get.webdis_url}LPOP/voice_called_terminate_sessionIds`)
+    let calledSessionID = JSON.parse(resCalled.body)['LPOP'];
+    let phoneNumberCalling = userData[0].get.zz + callingSessionID.toString();
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
 
-    voiceCallingTerminate("2" + sessionID, phoneNumberCalling, phoneNumberCalled);
-    voiceCalledTerminate("3" + sessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCallingTerminate("2" + callingSessionID, phoneNumberCalling, phoneNumberCalled);
+    voiceCalledTerminate("3" + calledSessionID, phoneNumberCalling, phoneNumberCalled);
 }
 
 export function terminateVideoCallingSession() {
-    let sessionID = vu.idInTest % cfg[0].get.numberOfAccounts;
-    let phoneNumberCalling = userData[0].get.zz + sessionID.toString();
+    let resCalling = http.get(`${cfg[0].get.webdis_url}LPOP/video_calling_terminate_sessionIds`)
+    let callingSessionID = JSON.parse(resCalling.body)['LPOP'];
+    let phoneNumberCalling = userData[0].get.zz + callingSessionID.toString();
     let phoneNumberCalled = callingCalled[0][parseInt(phoneNumberCalling)];
 
-    videoCallingTerminate("4" + sessionID, phoneNumberCalling, phoneNumberCalled);
+    videoCallingTerminate("4" + callingSessionID, phoneNumberCalling, phoneNumberCalled);
 }
