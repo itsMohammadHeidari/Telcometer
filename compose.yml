@@ -1,0 +1,31 @@
+name: "Telcometer"
+
+networks:
+  TelcometerNet: 
+
+services:
+  webdis:
+    image: nicolas/webdis:latest
+    container_name: "telcometer-webdis"
+    hostname: "webdis.telcometer"
+    restart: unless-stopped
+    command: /usr/local/bin/webdis /config/webdis.json
+    volumes:
+      - ./configs/webdis.json:/config/webdis.json
+      - ./logs/webdis.log:/webdis.log
+    networks:
+      - TelcometerNet
+    depends_on:
+      - redis
+    ports:
+      - "127.0.0.1:7379:7379"
+
+  redis:
+    image: redis:latest
+    container_name: "telcometer-redis"
+    hostname: "redis.telcometer"
+    restart: unless-stopped
+    networks:
+      - TelcometerNet
+    ports:
+      - "6379:6379"
