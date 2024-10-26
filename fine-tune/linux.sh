@@ -71,3 +71,5 @@ sudo sysctl -w vm.stat_interval=10
 # Disable timer migration to potentially improve performance
 # This command disables timer migration, which can be beneficial for systems with specific performance requirements.
 sudo sysctl -w kernel.timer_migration=0
+
+./bin/k6 run --no-summary --no-teardown --no-thresholds --no-usage-report src/main.js

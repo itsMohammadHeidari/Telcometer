@@ -33,13 +33,13 @@ const client = diam.Client({
 
 export const options = {
     // A boolean specifying whether k6 should reuse TCP connections
-    noVUConnectionReuse: true,
+    noVUConnectionReuse: false,
 
     // A boolean specifying whether k6 should ignore TLS verifications for connections established from code
     insecureSkipTLSVerify: true,
 
     // A boolean specifying whether k6 should disable keep-alive connections
-    noConnectionReuse: true,
+    noConnectionReuse: false,
 
     // Configure DNS resolution behavior
     dns: {
@@ -62,71 +62,71 @@ export const options = {
             vus: cfg[0].get.numberOfAccounts,
             iterations: 1,
             startTime: '0s',
-            maxDuration: '10s',
+            maxDuration: '5s',
         },
         scenario_voiceCallingCalledInit: {
             exec: "initVoiceCallingCalledSession",
             executor: 'per-vu-iterations',
             vus: cfg[0].get.numberOfAccounts,
             iterations: 1,
-            startTime: '15s',
-            maxDuration: '25s',
+            startTime: '6s',
+            maxDuration: '11s',
         },
         scenario_videoCallingInit: {
             exec: "initVideoCallingSession",
             executor: 'per-vu-iterations',
             vus: cfg[0].get.numberOfAccounts,
             iterations: 1,
-            startTime: '20s',
-            maxDuration: '30s',
+            startTime: '12s',
+            maxDuration: '17s',
         },
         scenario_dataUpdate: {
             exec: "updateDataSession",
             executor: 'per-vu-iterations',
             vus: cfg[0].get.numberOfAccounts,
             iterations: 10,
-            startTime: '60s',
-            maxDuration: '600s',
+            startTime: '6s',
+            maxDuration: '60s',
         },
         scenario_voiceCallingCalledUpdate: {
             exec: "updateVoiceCallingCalledSession",
             executor: 'per-vu-iterations',
             vus: cfg[0].get.numberOfAccounts,
             iterations: 10,
-            startTime: '40s',
-            maxDuration: '600s',
+            startTime: '13s',
+            maxDuration: '65s',
         },
         scenario_videoUpdate: {
             exec: "updateVideoCallingSession",
             executor: 'per-vu-iterations',
             vus: cfg[0].get.numberOfAccounts,
             iterations: 10,
-            startTime: '50s',
-            maxDuration: '600s',
+            startTime: '19s',
+            maxDuration: '71s',
         },
         scenario_dataTerminate: {
             exec: "terminateDataSession",
             executor: 'per-vu-iterations',
             vus: cfg[0].get.numberOfAccounts,
             iterations: 1,
-            startTime: '250s',
-            maxDuration: '630s',
+            startTime: '62s',
+            maxDuration: '66s',
         },
         scenario_voiceCallingCalledTerminate: {
             exec: "terminateVoiceCallingCalledSession",
             executor: 'per-vu-iterations',
             vus: cfg[0].get.numberOfAccounts,
             iterations: 1,
-            startTime: '260s',
-            maxDuration: '632s',
+            startTime: '67s',
+            maxDuration: '72s',
         },
         scenario_videoCallingTerminate: {
             exec: "terminateVideoCallingSession",
             executor: 'per-vu-iterations',
             vus: cfg[0].get.numberOfAccounts,
             iterations: 1,
-            startTime: '270s',
-            maxDuration: '682s',
+            startTime: '73s',
+            maxDuration: '78s',
         },
     },
 };
